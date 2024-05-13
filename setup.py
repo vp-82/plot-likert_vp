@@ -7,10 +7,10 @@ with open("requirements.txt", "r") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
-    name="plot-likert",
+    name="plot-likert-vp",
     version="0.5.0",
-    author="nmalkin",
-    description="Library to visualize results from Likert-style survey questions",
+    author="Václav Pechtor",
+    description="Library to visualize results from Likert-style survey questions - updated!",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="plot graph visualize likert survey matplotlib",

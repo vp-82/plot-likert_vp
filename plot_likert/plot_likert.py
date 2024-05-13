@@ -56,6 +56,7 @@ def plot_counts(
     compute_percentages: bool = False,
     bar_labels: bool = False,
     bar_labels_color: typing.Union[str, typing.List[str]] = "white",
+    ylabel: typing.Optional[str] = None,  # Add this line
     **kwargs,
 ) -> matplotlib.axes.Axes:
     """
@@ -181,6 +182,9 @@ def plot_counts(
     # Reposition the legend if present
     if axes.get_legend():
         axes.legend(bbox_to_anchor=(1.05, 1))
+
+    if ylabel is not None:  # Only set if provided
+        axes.set_ylabel(ylabel)
 
     # Adjust padding
     counts_sum = counts.sum(axis="columns").max()
@@ -321,7 +325,7 @@ def _compute_counts_percentage(counts: pd.DataFrame) -> pd.DataFrame:
         warn(
             "In your data, not all questions have the same number of responses. i.e., different numbers of people answered each question. Therefore, the percentages aren't directly comparable: X% for one question represents a different number of responses than X% for another question, yet they will appear the same in the percentage graph. This may be misleading to your reader."
         )
-    return counts.divide(counts.sum(axis="columns"), axis="rows") * 100
+    return (counts.divide(counts.sum(axis="columns"), axis="rows") * 100).round(1)
 
 
 def likert_response(df: pd.DataFrame, scale: Scale) -> pd.DataFrame:
@@ -350,6 +354,7 @@ def plot_likert(
     xtick_interval: typing.Optional[int] = None,
     bar_labels: bool = False,
     bar_labels_color: typing.Union[str, typing.List[str]] = "white",
+    ylabel: typing.Optional[str] = None,
     **kwargs,
 ) -> matplotlib.axes.Axes:
     """
@@ -411,6 +416,7 @@ def plot_likert(
         compute_percentages=plot_percentage,
         bar_labels=bar_labels,
         bar_labels_color=bar_labels_color,
+        ylabel=ylabel,
         **kwargs,
     )
 
